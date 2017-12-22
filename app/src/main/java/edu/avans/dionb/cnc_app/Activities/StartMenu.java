@@ -22,7 +22,6 @@ public class StartMenu extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), TraillerStaatInvullen.class);
                 startActivity(i);
-                //Toast.makeText(getApplicationContext(), "Nog niet geimplementeerd", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -32,7 +31,15 @@ public class StartMenu extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), TrailerToevoegen.class);
                 startActivity(i);
-                //Toast.makeText(getApplicationContext(), "Nog niet geimplementeerd", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        ImageButton staatTrailersbekijken = (ImageButton) findViewById(R.id.imagebutton_trailerstaatbekijken);
+        staatTrailersbekijken.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), TrailerStaatOverzichtActivity.class);
+                startActivity(i);
             }
         });
     }

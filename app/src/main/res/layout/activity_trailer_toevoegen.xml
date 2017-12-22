@@ -91,13 +91,11 @@
         android:layout_width="0dp"
         android:layout_height="59dp"
         android:layout_marginTop="30dp"
-        android:text="Voeg trailler toe!"
-        app:layout_constraintTop_toBottomOf="@+id/input_kenteken"
-        tools:layout_constraintRight_creator="1"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:text="Opslaan"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_kenteken"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        tools:layout_constraintRight_creator="1" />
 
 </android.support.constraint.ConstraintLayout>
