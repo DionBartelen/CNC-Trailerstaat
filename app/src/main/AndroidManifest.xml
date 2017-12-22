@@ -20,7 +20,8 @@
         </activity>
         <activity android:name=".Activities.TraillerStaatInvullen" />
         <activity android:name=".Activities.TrailerToevoegen" />
-        <activity android:name=".Activities.TrailerStaatOverzichtActivity"></activity>
+        <activity android:name=".Activities.TrailerStaatOverzichtActivity" />
+        <activity android:name=".Activities.StaatOverzichtActivity"></activity>
     </application>
 
 </manifest>

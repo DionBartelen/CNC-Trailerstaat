@@ -22,9 +22,11 @@ import edu.avans.dionb.cnc_app.R;
 public class TrailerToevoegen extends AppCompatActivity  {
 
     DatabaseReference reference;
+    boolean shoudSave = false;
+    Spinner gmpInput;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trailer_toevoegen);
 
@@ -38,6 +40,7 @@ public class TrailerToevoegen extends AppCompatActivity  {
             String kenteken = getIntent().getExtras().getString("kenteken");
             kentekenText.setText(kenteken);
             String gmp = getIntent().getExtras().getString("gmp");
+            shoudSave = getIntent().getExtras().getBoolean("saveOnExit");
             if (gmp.equals("Ja")) {
                 arrayGMP = new String[]{"Ja", "Nee"};
             }
@@ -47,8 +50,8 @@ public class TrailerToevoegen extends AppCompatActivity  {
 
         reference = FirebaseDatabase.getInstance().getReference();
 
-        final Spinner gmpInput = (Spinner) findViewById(R.id.input_GMP);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        gmpInput = (Spinner) findViewById(R.id.input_GMP);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 R.layout.string_spinner, R.id.spinner_gmp);
         adapter.addAll(arrayGMP);
         gmpInput.setAdapter(adapter);
@@ -57,23 +60,35 @@ public class TrailerToevoegen extends AppCompatActivity  {
         voegToe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer traillerNummer = Integer.valueOf(((EditText) findViewById(R.id.input_trailernummer)).getText().toString());
-                Trailer.GMP gmp = Trailer.GMP.valueOf(gmpInput.getSelectedItem().toString());
-                String kenteken = ((EditText) findViewById(R.id.input_kenteken)).getText().toString();
-                Trailer t = new Trailer(traillerNummer, kenteken, gmp);
-                reference.child("Trailer " + t.getTrailerNummer()).setValue(t).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(getApplicationContext(), "Trailer toegevoegd", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), "Trailer niet toegevoegd: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                saveTrailer();
             }
         });
+    }
+
+    public void saveTrailer() {
+        Integer traillerNummer = Integer.valueOf(((EditText) findViewById(R.id.input_trailernummer)).getText().toString());
+        Trailer.GMP gmp = Trailer.GMP.valueOf(gmpInput.getSelectedItem().toString());
+        String kenteken = ((EditText) findViewById(R.id.input_kenteken)).getText().toString();
+        Trailer t = new Trailer(traillerNummer, kenteken, gmp);
+        reference.child("Trailer " + t.getTrailerNummer()).setValue(t).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(getApplicationContext(), "Trailer toegevoegd", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), "Trailer niet toegevoegd: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(shoudSave) {
+            saveTrailer();
+        }
+        super.onBackPressed();
     }
 }

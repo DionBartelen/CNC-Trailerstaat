@@ -91,6 +91,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     i.putExtra("nummer", clickedTrailer.getTrailerNummer());
                     i.putExtra("kenteken", clickedTrailer.getKenteken());
                     i.putExtra("gmp", clickedTrailer.getGmp().toString());
+                    i.putExtra("saveOnExit", true);
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
                     ref.child("Trailer " + clickedTrailer.getTrailerNummer()).removeValue();
                     context.startActivity(i);
@@ -99,7 +100,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
         public void setNummer(String nummer) {
-            this.nummer.setText(nummer);
+            this.nummer.setText("Trailer: " + nummer);
         }
 
         public void setKenteken(String kenteken) {

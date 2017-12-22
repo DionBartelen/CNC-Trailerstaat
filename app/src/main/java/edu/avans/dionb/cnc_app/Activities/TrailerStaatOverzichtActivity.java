@@ -1,5 +1,6 @@
 package edu.avans.dionb.cnc_app.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -72,6 +73,8 @@ public class TrailerStaatOverzichtActivity extends AppCompatActivity implements 
     public void onClick(View v) {
         int itemPosition = listRecycler.getChildLayoutPosition(v);
         Trailer clickedTrailer = allTrailers.get(itemPosition);
-        Toast.makeText(getApplicationContext(), "Op trailer geklikt", Toast.LENGTH_LONG).show();
+        Intent i = new Intent(this, StaatOverzichtActivity.class);
+        i.putExtra("nummer", clickedTrailer.getTrailerNummer());
+        startActivity(i);
     }
 }
