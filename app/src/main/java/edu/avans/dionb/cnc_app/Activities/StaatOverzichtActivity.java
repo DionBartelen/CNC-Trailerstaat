@@ -16,6 +16,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,16 +64,17 @@ public class StaatOverzichtActivity extends AppCompatActivity implements Recycle
                 if(allItems != null && nummer != null) {
                     for (Map.Entry<String, Object> entry : allItems.entrySet()) {
                         HashMap<String, Object> trailer = (HashMap<String, Object>) entry.getValue();
-                        for(Map.Entry<String, Object> trailerEntry : trailer.entrySet()) {
-                            if(trailerEntry.getKey().contains("Staat")) {
+                        for (Map.Entry<String, Object> trailerEntry : trailer.entrySet()) {
+                            if (trailerEntry.getKey().contains("Staat")) {
                                 HashMap<String, Object> staat = (HashMap<String, Object>) trailerEntry.getValue();
                                 if (Objects.equals(Integer.valueOf(String.valueOf((long) trailer.get("trailerNummer"))), nummer)) {
-                                    allStati.add(new TrailerStaat(nummer, (String)staat.get("grid"), (String)staat.get("gmp"), (String)staat.get("opmerking"), (String)staat.get("datum")));
+                                    allStati.add(new TrailerStaat(nummer, (String) staat.get("grid"), (String) staat.get("gmp"), (String) staat.get("opmerking"), (String) staat.get("datum")));
                                 }
                             }
                         }
                     }
                 }
+                Collections.sort(allStati);
                 adapter.notifyDataSetChanged();
             }
 

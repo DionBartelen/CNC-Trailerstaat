@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +60,7 @@ public class TrailerStaatOverzichtActivity extends AppCompatActivity implements 
                         allTrailers.add(new Trailer(Integer.valueOf(String.valueOf((long)trailer.get("trailerNummer"))), (String)trailer.get("kenteken"), Trailer.GMP.valueOf((String)trailer.get("gmp"))));
                     }
                 }
+                Collections.sort(allTrailers);
                 adapter.notifyDataSetChanged();
             }
 

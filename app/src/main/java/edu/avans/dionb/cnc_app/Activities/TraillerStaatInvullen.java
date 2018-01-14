@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,9 +52,9 @@ public class TraillerStaatInvullen extends AppCompatActivity {
         Button saveButton = (Button) findViewById(R.id.trailerstaat_opslaanbutton);
 
 
-        nummerAdapter = new ArrayAdapter<Integer>(this, R.layout.string_spinner, R.id.spinner_gmp);
-        gmpAdapter = new ArrayAdapter<String>(this, R.layout.string_spinner, R.id.spinner_gmp);
-        gridAdapter = new ArrayAdapter<String>(this, R.layout.string_spinner, R.id.spinner_gmp);
+        nummerAdapter = new ArrayAdapter<>(this, R.layout.string_spinner, R.id.spinner_gmp);
+        gmpAdapter = new ArrayAdapter<>(this, R.layout.string_spinner, R.id.spinner_gmp);
+        gridAdapter = new ArrayAdapter<>(this, R.layout.string_spinner, R.id.spinner_gmp);
 
         String[] arrayGMP = new String[] {"Niet nodig", "Vol", "Gevuld", "Leeg"};
         gmpAdapter.addAll(arrayGMP);
@@ -98,6 +99,12 @@ public class TraillerStaatInvullen extends AppCompatActivity {
                         nummerAdapter.add(Integer.valueOf(String.valueOf((long)trailer.get("trailerNummer"))));
                     }
                 }
+                nummerAdapter.sort(new Comparator<Integer>() {
+                    @Override
+                    public int compare(Integer o1, Integer o2) {
+                        return o1 - o2;
+                    }
+                });
                 nummerAdapter.notifyDataSetChanged();
             }
 
@@ -119,7 +126,7 @@ public class TraillerStaatInvullen extends AppCompatActivity {
     public void saveStaat() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         if(datum.equals("")) {
-            datum =Calendar.getInstance().getTime().toString();
+            datum = Calendar.getInstance().getTime().toString();
         }
         TrailerStaat staat = new TrailerStaat((Integer)nummerSpinner.getSelectedItem(), (String)gridSpinner.getSelectedItem(), (String)gmpSpinner.getSelectedItem(), opmerkingText.getText().toString(), datum);
         ref.child("Trailer " + (Integer)nummerSpinner.getSelectedItem()).child("Staat " + datum).setValue(staat).addOnSuccessListener(new OnSuccessListener<Void>() {

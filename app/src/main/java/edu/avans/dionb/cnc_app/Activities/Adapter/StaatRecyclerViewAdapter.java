@@ -21,6 +21,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import edu.avans.dionb.cnc_app.Activities.Entity.Trailer;

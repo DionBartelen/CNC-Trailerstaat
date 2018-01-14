@@ -1,10 +1,17 @@
 package edu.avans.dionb.cnc_app.Activities.Entity;
 
+import android.support.annotation.NonNull;
+
 /**
  * Created by dionb on 21-12-2017.
  */
 
-public class Trailer {
+public class Trailer implements Comparable<Trailer> {
+    @Override
+    public int compareTo(@NonNull Trailer o) {
+        return trailerNummer - o.trailerNummer;
+    }
+
     public enum GMP {
         Ja, Nee
     }
